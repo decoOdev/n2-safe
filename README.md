@@ -1,4 +1,4 @@
-# 🔐 N2 - API Segura com Login e Gerenciamento de Usuários
+# 🔐 N2 - API Segura com Login e Gerenciamento de Usuários (Versão 2.0)
 
 Este repositório contém a implementação segura de uma API com sistema de autenticação e gerenciamento de usuários, utilizando práticas recomendadas de segurança da informação. O projeto é parte da avaliação N2 da disciplina de Segurança da Informação.
 
@@ -115,6 +115,10 @@ npm run dev
 | DELETE | /users/:id | Remove um usuário                   | ✅       |
 
 ---
+
+> **ℹ️ Observação:** As rotas marcadas com `❌` não exigem autenticação JWT porque são usadas para entrada no sistema (registro e login).  
+> Já as rotas marcadas com `✅` são protegidas e exigem que o usuário esteja autenticado via token JWT (armazenado em cookie).  
+> Caso o token não esteja presente ou seja inválido, a aplicação retorna um erro de acesso negado.
 
 ## 🧪 Testes com Postman
 
