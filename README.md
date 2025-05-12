@@ -1,4 +1,4 @@
-# 🔐 N2 - API Segura com Login e Gerenciamento de Usuários (Versão 2.0)
+# 🔐 N2 - API Segura com Login e Gerenciamento de Usuários
 
 Este repositório contém a implementação segura de uma API com sistema de autenticação e gerenciamento de usuários, utilizando práticas recomendadas de segurança da informação. O projeto é parte da avaliação N2 da disciplina de Segurança da Informação.
 
