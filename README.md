@@ -1,6 +1,6 @@
-# 🔐 N2 - API Segura com Login (Versão 2.0)
+# 🔐 N2 - API Segura com Login e Gerenciamento de Usuários
 
-Este repositório contém a implementação segura de uma API de autenticação e autorização com interface em EJS, banco de dados PostgreSQL e práticas recomendadas de segurança. O projeto faz parte do trabalho de Segurança da Informação — N2 da disciplina Administração de Sistemas Operacionais II.
+Este repositório contém a implementação segura de uma API com sistema de autenticação e gerenciamento de usuários, utilizando práticas recomendadas de segurança da informação. O projeto é parte da avaliação N2 da disciplina de Segurança da Informação.
 
 ---
 
@@ -15,8 +15,27 @@ Este repositório contém a implementação segura de uma API de autenticação 
 - bcrypt
 - cookie-parser
 - dotenv
+- method-override
 
 ---
+
+## 📁 Estrutura de Diretórios
+
+```
+n2-safe/
+├── prisma/
+│   └── schema.prisma
+├── src/
+│   ├── routes/
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── views/
+│   └── app.js
+├── .env
+├── .gitignore
+├── README.md
+└── package.json
+```
 
 ---
 
@@ -26,75 +45,88 @@ Este repositório contém a implementação segura de uma API de autenticação 
 
 - Node.js e npm instalados
 - PostgreSQL rodando localmente
-- Conta no GitHub (para clonar ou colaborar)
 
 ### Passos:
 
 1. **Clone o repositório:**
 
-\`\`\`bash
+```bash
 git clone https://github.com/seu-usuario/n2-safe.git
 cd n2-safe
-\`\`\`
+```
 
 2. **Instale as dependências:**
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 3. **Configure o arquivo `.env`:**
 
-Crie um `.env` com a seguinte variável:
-
-\`\`\`env
+```env
 DATABASE_URL="postgresql://usuario:senha@localhost:5432/n2safe"
 JWT_SECRET="segredo_super_seguro"
-\`\`\`
+```
 
 4. **Crie o banco de dados no PostgreSQL com o nome `n2safe`**
 
-5. **Rode a migração do Prisma:**
+5. **Execute a migração com Prisma:**
 
-\`\`\`bash
+```bash
 npx prisma migrate dev --name init
-\`\`\`
+```
 
-6. **Rode a aplicação:**
+6. **Inicie a aplicação:**
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 ---
 
 ## 🌐 Funcionalidades
 
-- Registro de usuários (com hash de senha via bcrypt)
-- Login com autenticação via JWT
-- Interface simples via EJS
-- Proteção de rotas com middleware JWT
-- Logout com remoção de cookie
+- Registro e login com autenticação via JWT
+- Criptografia de senha com bcrypt
+- Sessões via cookies HTTPOnly
+- Middleware para proteger rotas sensíveis
+- Interface com EJS
+- Logout com destruição de cookie
+- **CRUD completo de usuários**:
+  - Listagem de usuários
+  - Atualização de nome/email
+  - Exclusão de usuários
+- Acesso ao painel `/users` apenas para usuários autenticados
 
 ---
 
 ## 📬 Rotas principais
 
-| Método | Rota       | Descrição                        |
-| ------ | ---------- | -------------------------------- |
-| GET    | /register  | Formulário de registro           |
-| POST   | /register  | Processa novo cadastro           |
-| GET    | /login     | Formulário de login              |
-| POST   | /login     | Processa autenticação            |
-| GET    | /dashboard | Área protegida (JWT obrigatório) |
-| POST   | /logout    | Encerra a sessão                 |
+| Método | Rota       | Descrição                           | Proteção |
+| ------ | ---------- | ----------------------------------- | -------- |
+| GET    | /register  | Formulário de registro              | ❌       |
+| POST   | /register  | Registra novo usuário               | ❌       |
+| GET    | /login     | Formulário de login                 | ❌       |
+| POST   | /login     | Autentica usuário e gera cookie JWT | ❌       |
+| GET    | /dashboard | Painel após login                   | ✅       |
+| POST   | /logout    | Finaliza a sessão                   | ✅       |
+| GET    | /users     | Lista todos os usuários             | ✅       |
+| PUT    | /users/:id | Atualiza nome/email de um usuário   | ✅       |
+| DELETE | /users/:id | Remove um usuário                   | ✅       |
 
 ---
 
 ## 🧪 Testes com Postman
 
-1. Envie `POST /register` com username, email e senha.
-2. Envie `POST /login` com email e senha válidos.
-3. Copie o cookie `token` da resposta e use em `GET /dashboard`.
+1. Enviar `POST /register` com `username`, `email`, `password`
+2. Enviar `POST /login` com email e senha válidos
+3. Copiar o cookie `token` retornado e usar como:
+   ```
+   Cookie: token=SEU_TOKEN_AQUI
+   ```
+4. Testar rotas protegidas:
+   - `GET /users`
+   - `PUT /users/:id`
+   - `DELETE /users/:id`
 
 ---
