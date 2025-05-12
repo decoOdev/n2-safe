@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuários</title>
+</head>
+<body>
+  <h1>Lista de Usuários</h1>
+
+  <table border="1" cellpadding="10">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuário</th>
+        <th>Email</th>
+        <th>Criado em</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td><%= user.createdAt.toLocaleString() %></td>
+          <td>
+            <form action="/users/<%= user.id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" onclick="return confirm('Deseja realmente deletar?')">🗑️</button>
+            </form>
+
+            <form action="/users/<%= user.id %>?_method=PUT" method="POST" style="display:inline;">
+              <input type="text" name="username" value="<%= user.username %>" required />
+              <input type="email" name="email" value="<%= user.email %>" required />
+              <button type="submit">✏️</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <p><a href="/dashboard">← Voltar para Dashboard</a></p>
+</body>
+</html>

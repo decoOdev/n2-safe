@@ -1,13 +1,7 @@
 import express from 'express';
 
 // Importa os controladores que manipulam as ações de autenticação
-import {
-  renderRegister,
-  handleRegister,
-  renderLogin,
-  handleLogin,
-  renderDashboard
-} from '../controllers/auth-controller.js';
+import { renderRegister, handleRegister, renderLogin, handleLogin, renderDashboard } from '../controllers/auth-controller.js';
 
 // Middleware que protege rotas (exige token JWT válido)
 import { ensureAuthenticated } from '../middlewares/auth-middleware.js';

@@ -5,6 +5,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth-routes.js';
 import { PrismaClient } from '@prisma/client';
+import methodOverride from 'method-override';
+import userRoutes from './routes/user-routes.js'
+
 
 dotenv.config();
 const app = express();
@@ -18,11 +21,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Rotas
 app.use('/', authRoutes);
+app.use('/', userRoutes);
+
 
 // Inicialização
 const PORT = process.env.PORT || 3000;
