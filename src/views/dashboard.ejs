@@ -7,6 +7,17 @@
 <body>
   <h1>Bem-vindo, <%= username %>!</h1>
   <p>Você está logado.</p>
+
+  <!-- Botão para Gerenciar Usuários -->
+<form action="/users" method="GET" style="display: inline;">
+  <button
+    type="submit"
+    style="padding: 10px 16px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer;">
+    👥 Gerenciar Usuários
+  </button>
+</form>
+<br>
+<br>
   <form action="/logout" method="POST">
     <button type="submit">Sair</button>
   </form>
